@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="beauty_in_master_schedule_view_form" model="ir.ui.view">
+        <field name="name">beauty_in_master_schedule_view_form</field>
+        <field name="model">beauty.in.master.schedule</field>
+        <field name="arch" type="xml">
+            <form string="Master schedule form">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="shift_date"/>
+                            <field name="shift_start_time"/>
+                            <field name="shift_end_time" readonly="1"/>
+                            <field name="shift_duration"/>
+                        </group>
+                        <group>
+                            <field name="location_id"/>
+                            <field name="day_week" readonly="1"/>
+                            <field name="master_id"/>
+                        </group>
+
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="beauty_in_master_schedule_view_tree" model="ir.ui.view">
+        <field name="name">beauty_in_master_schedule_view_tree</field>
+        <field name="model">beauty.in.master.schedule</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="shift_date"/>
+                <field name="shift_start_time"/>
+                <field name="master_id"/>
+                <field name="shift_end_time" readonly="1" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="beauty_in_master_schedule_view_calendar" model="ir.ui.view">
+        <field name="name">beauty_master_schedule_view_calendar</field>
+        <field name="model">beauty.in.master.schedule</field>
+        <field name="arch" type="xml">
+            <calendar string="Master schedule calendar" date_start="shift_start_time" date_stop="shift_end_time"
+                      mode="month" color="master_id" quick_add="False">
+                <field name="master_id" avatar_field="image_128"/>
+                <field name="shift_start_time"/>
+                <field name="shift_end_time"/>
+                <!--                    <field name="visit_ids" avatar_field="img"/>-->
+            </calendar>
+        </field>
+    </record>
+
+    <record id="beauty_in_action_view_master_schedule" model="ir.actions.act_window">
+        <field name="name">Master schedule</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">beauty.in.master.schedule</field>
+        <field name="view_mode">calendar,tree,form</field>
+        <field name="view_id" ref="beauty_in_master_schedule_view_calendar"/>
+    </record>
+
+    <menuitem id="beauty_in_master_schedule_menu"
+              name="Masters schedule" parent="beauty_in_schedules_main_menu"
+              action="beauty_in_action_view_master_schedule" sequence="100"/>
+
+</odoo>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="beauty_in_week_schedule_view_form" model="ir.ui.view">
+            <field name="name">beauty_in_week_schedule_view_form</field>
+            <field name="model">beauty.in.week.schedule.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Add week schedule">
+                    <sheet>
+                        <group>
+                            <field name="master_id"/>
+                            <field name="week_start_date"/>
+                            <field name="shift_start_time"/>
+                            <field name="shift_duration"/>
+                            <field name="is_even_or_odd" string=" " widget="radio" options="{'horizontal': true}"/>
+                        </group>
+                        <footer>
+                            <button name="add_schedule" string="Add schedule" type="object" class="btn btn-primary"/>
+                            <button special="cancel" string="Cancel" class="btn btn-secondary"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="beauty_in_action_view_week_schedule" model="ir.actions.act_window">
+            <field name="name">Add week schedule</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">beauty.in.week.schedule.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="beauty_in_week_schedule_view_form"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="beauty_in_week_schedule_menu"
+                  parent="beauty_in_schedules_main_menu"
+                  name="Add week schedule" sequence="200"
+                  action="beauty_in_action_view_week_schedule"
+        />
+</odoo>

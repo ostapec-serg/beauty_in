@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="beauty_in_appointment_view_form" model="ir.ui.view">
+        <field name="name">beauty_in_appointment_view_form</field>
+        <field name="model">beauty.in.appointment</field>
+        <field name="arch" type="xml">
+            <form string="Appointment form">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,active,done"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="appointment_date" required="1" invisible="1"/>
+                        <field name="appointment_start_dtime" required="1" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                        <field name="partner_id" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                        <field name="master_id"/>
+                        <field name="service"/>
+                        <field name="appointment_duration"/>
+                        <field name="location_id" required="1" readonly="1"/>
+                        <field name="appointment_end_dtime" required="1" readonly="1"/>
+                        <field name="day_name" readonly="1"/>
+                        <field name="is_done" attrs="{'readonly': [('state', '=', 'draft')], 'invisible': [('state', '=', 'draft')]}"/>
+                    </group>
+                    <notebook colspan="1">
+                        <page string="Notes" name="notes" autofocus="autofocus">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="beauty_in_appointment_view_tree" model="ir.ui.view">
+        <field name="name">beauty_in_appointment_view_tree</field>
+        <field name="model">beauty.in.appointment</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="state" invisible="1"/>
+                <field name="partner_id"/>
+                <field name="master_id"/>
+                <field name="appointment_start_dtime"/>
+                <field name="is_done"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="beauty_in_appointment_view_calendar" model="ir.ui.view">
+        <field name="name">beauty_in_appointment_view_calendar</field>
+        <field name="model">beauty.in.appointment</field>
+        <field name="arch" type="xml">
+            <calendar string="Appointment" date_start="appointment_start_dtime" date_stop="appointment_end_dtime" color="partner_id"
+                      quick_add="False" mode="month">
+                <field name="partner_id" avatar_field="image_128"/>
+                <field name="master_id" filters="1" avatar_field="image_128"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="beauty_in_action_view_appointment" model="ir.actions.act_window">
+        <field name="name">Appointment</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">beauty.in.appointment</field>
+        <field name="view_mode">calendar,tree,form</field>
+        <field name="view_id" ref="beauty_in_appointment_view_calendar"/>
+    </record>
+
+    <menuitem id="beauty_in_appointment_menu"
+              name="Appointments" parent="beauty_in_administration_main_menu"
+              action="beauty_in_action_view_appointment" sequence="100"/>
+
+</odoo>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="master_view_form" model="ir.ui.view">
+        <field name="name">master_view_form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='work_phone']" position="after">
+                <field name="employee_type"/>
+            </xpath>
+            <xpath expr="//page[@name='hr_settings']" position="after">
+                <page name='specialty' string="Specialties">
+                    <field name="specialty_ids" widget="many2many_tags"/>
+                </page>
+                <page string="Today appointments" name="today_appointments">
+                    <field name="today_appointment_ids"/>
+                </page>
+                <page string="Appointments history(Monthly)" name="appointments_history">
+                    <field name="appointment_history_ids"/>
+                </page>
+            </xpath>
+            <xpath expr="//page[@name='public']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//page[@name='personal_information']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//page[@name='hr_settings']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="master_view_tree" model="ir.ui.view">
+        <field name="name">master_view_tree</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='work_phone']" position="after">
+                <field name="employee_type"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="beauty_in_action_view_master" model="ir.actions.act_window">
+        <field name="name">Masters</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.employee</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[('employee_type','=','master')]</field>
+    </record>
+
+    <menuitem id="beauty_in_menu_master"
+              name="Masters" parent="beauty_in_main_menu"
+              action="beauty_in_action_view_master" sequence="100"/>
+
+</odoo>

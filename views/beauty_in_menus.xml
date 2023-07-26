@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="beauty_in_menu_root"
+              web_icon="beauty_in,static/description/icon.png"
+              name="Beauty"
+              groups="beauty_in.group_user"
+              sequence="300"/>
+
+<!--    <menuitem id="beauty_in_menu_action"-->
+<!--              name="Dashboard" parent="beauty_in_menu_root"-->
+<!--              action="salon_action_dashboard"-->
+<!--              sequence="-100"/>-->
+
+    <menuitem id="beauty_in_main_menu"
+              parent="beauty_in_menu_root"
+              groups="beauty_in.group_user"
+              name="Main" sequence="100"/>
+
+    <menuitem id="beauty_in_schedules_main_menu"
+              parent="beauty_in_menu_root"
+              groups="beauty_in.group_user"
+              name="Schedules" sequence="200"/>
+
+    <menuitem id="beauty_in_administration_main_menu"
+              parent="beauty_in_menu_root"
+              name="Administration menu"
+              groups="beauty_in.group_admin"
+              sequence="700"/>
+
+</odoo>

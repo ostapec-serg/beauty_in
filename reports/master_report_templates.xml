@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="master_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <div class="text_center">
+                            <h2 style="text-align:center;">Master monthly report</h2>
+                            <div>
+                                <t t-if="doc.avatar_1920">
+                                    <p style="text-align: right;">
+                                        <img t-if="doc.avatar_1920" widget="image" t-att-src="image_data_uri(doc.avatar_1920)"
+                                                   style="max-height: 500px; border-radius: 50%" alt="Photo"/>
+                                    </p>
+                                </t>
+                            </div>
+                            <h4 style="text-align: right;">Master:
+                                <span t-field="doc.name"/>
+                            </h4>
+                            <h5 style="text-align: right;">Specialties:<br/>
+                                <t t-foreach="doc.specialty_ids" t-as="specialty">
+                                    <span t-field="specialty.name"/>
+                                    <br/>
+                                </t>
+                            </h5>
+                            <br/>
+                            <br/>
+                            <h4 style="text-align:center;">Clients</h4>
+                            <br/>
+
+
+                            <table class="table" style="margin-left:auto;margin-right:auto;width:788px">
+                                <thead>
+                                    <tr style="font-size:14px; text-align:center">
+                                        <th>
+                                            <span>
+                                                <strong>Client</strong>
+                                            </span>
+                                        </th>
+                                        <th>
+                                            <span>
+                                                <strong>service</strong>
+                                            </span>
+                                        </th>
+                                        <th>
+                                            <span>
+                                                <strong>Location</strong>
+                                            </span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="doc.appointment_ids" t-as="appointment">
+                                        <tr style="font-size:14px; text-align: centre">
+                                            <td style="width:252px">
+                                                <span t-field="appointment.partner_id"/>
+                                            </td>
+                                            <td style="width:134px">
+                                                <span t-field="appointment.service"/>
+                                            </td>
+                                            <td style="width:150px">
+                                                <span t-field="appointment.location_id"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <div style="border-top: 1px solid #CCCCCC; color:#6D6D6D;">
+                            <div style="padding-top:10px;">
+                                <span t-esc="res_company.city"/>
+                            </div>
+                            <div>
+                                <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y %H:%M')"/>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

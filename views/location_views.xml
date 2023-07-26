@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="beauty_location_view_form" model="ir.ui.view">
+        <field name="name">beauty_location_view_form</field>
+        <field name="model">beauty.in.location</field>
+        <field name="arch" type="xml">
+            <form string="Location form">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,active,arch"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="company_id" invisible="1"/>
+                        <field name="name"/>
+                        <field name="comment"/>
+                        <field name="parent_id"/>
+                        <field name="available_service_ids" widget="many2many_tags"/>
+                    </group>
+                    <notebook colspan="2" attrs="{'invisible': [('state', '=', 'draft')]}">
+                        <page string="Today appointments" name="today_appointments" autofocus="autofocus">
+                        </page>
+                        <page string="Appointments history" name="appointments_history">
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="beauty_location_view_tree" model="ir.ui.view">
+        <field name="name">beauty_location_view_tree</field>
+        <field name="model">beauty.in.location</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="comment"/>
+                <field name="parent_id"/>
+                <field name="available_service_ids" widget="many2many_tags"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="beauty_location_view_search" model="ir.ui.view">
+        <field name="name">beauty_location_view_search</field>
+        <field name="model">beauty.in.location</field>
+        <field name="arch" type="xml">
+            <search>
+                <searchpanel>
+<!--                    <field name="parent_id" hierarchize="1" enable_counters="1"/>-->
+<!--                    <field name="child_ids" icon="fa-users" select="multi"/>-->
+<!--                    <field name="state" expand="1" select="multi" icon="fa-users" enable_counters="1"/>-->
+                    <field name="parent_id" limit="20" hierarchize="1" icon="fa-users" enable_counters="1"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <record id="beauty_location_view_graph" model="ir.ui.view">
+        <field name="name">beauty_location_view_graph</field>
+        <field name="model">beauty.in.location</field>
+        <field name="arch" type="xml">
+            <graph type="pie">
+                <field name="create_date" interval="month"/>
+                <field name="name"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="beauty_action_view_location" model="ir.actions.act_window">
+        <field name="name">Location</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">beauty.in.location</field>
+        <field name="view_mode">tree,graph,form</field>
+        <field name="search_view_id" ref="beauty_in.beauty_location_view_search"/>
+        <field name="view_id" ref="beauty_location_view_tree"/>
+    </record>
+
+
+    <menuitem id="beauty_in_location_menu"
+              name="Locations" parent="beauty_in_administration_main_menu"
+              action="beauty_action_view_location" sequence="200"/>
+
+</odoo>

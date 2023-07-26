@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="beauty_in_specialty_view_form" model="ir.ui.view">
+        <field name="name">beauty_in_specialty_view_form</field>
+        <field name="model">beauty.in.beauty.specialty</field>
+        <field name="arch" type="xml">
+            <form string="Specialty form">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="desc"/>
+                        <field name="master_ids" widget="many2many_tags"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="beauty_in_specialty_view_tree" model="ir.ui.view">
+        <field name="name">beauty_in_specialty_view_tree</field>
+        <field name="model">beauty.in.beauty.specialty</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="beauty_in_action_view_specialty" model="ir.actions.act_window">
+        <field name="name">Specialty</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">beauty.in.beauty.specialty</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem id="beauty_in_specialty_menu"
+              parent="beauty_in_main_menu"
+              action="beauty_in_action_view_specialty"
+              name="Specialties" sequence="200"/>
+
+</odoo>
