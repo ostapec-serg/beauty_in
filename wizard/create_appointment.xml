@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="beauty_in_add_appointment_view_form" model="ir.ui.view">
+        <field name="name">beauty_in_add_appointment_view_form</field>
+        <field name="model">beauty.in.add.appointment.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Add Appointment">
+                <sheet>
+                    <group>
+                        <field name="is_visible" invisible="1"/>
+                        <field name="partner_id" required="1"/>
+                        <field name="master_id" required="1"/>
+                        <field name="location_id" required="1"/>
+                        <field name="service" required="1"/>
+                        <field name="appointment_duration" required="1"/>
+                        <field name="appointment_start_dtime" required="1"/>
+                    </group>
+                    <footer>
+                        <button name="add_appointment"
+                                string="Create"
+                                type="object"
+                                attrs="{'invisible': [('is_visible', '=', False)]}"
+                                class="btn btn-primary"/>
+                        <button special="cancel" string="Cancel" class="btn btn-secondary"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="beauty_in_action_view_add_appointment" model="ir.actions.act_window">
+        <field name="name">Add Appointment</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">beauty.in.add.appointment.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="beauty_in_add_appointment_view_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="beauty_in_add_appointment_menu"
+              name="Add Appointment" parent="beauty_in_menu_root"
+              action="beauty_in_action_view_add_appointment" sequence="600"/>
+
+</odoo>

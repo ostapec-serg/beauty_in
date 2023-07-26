@@ -1,0 +1,36 @@
+<?xm1 version="1.0" encoding "utf-8"?>
+<odoo>
+    <!--    Speciality    -->
+    <record id="speciality_data_hairstylist" model="beauty.in.beauty.specialty" forcecreate="True">
+        <field name="name">Hairstylist</field>
+    </record>
+
+    <record id="speciality_stylist" model="beauty.in.beauty.specialty" forcecreate="True">
+        <field name="name">Stylist</field>
+    </record>
+
+    <record id="speciality_data_makeup_artist" model="beauty.in.beauty.specialty" forcecreate="True">
+        <field name="name">Makeup artist</field>
+    </record>
+
+    <record id="speciality_data_master_of_eyelash_extension" model="beauty.in.beauty.specialty" forcecreate="True">
+        <field name="name">Master of eyelash extension</field>
+    </record>
+
+    <record id="speciality_data_manicure_master" model="beauty.in.beauty.specialty" forcecreate="True">
+        <field name="name">Manicure master</field>
+    </record>
+
+    <record id="speciality_tattoo_artist" model="beauty.in.beauty.specialty" forcecreate="True">
+        <field name="name">Tattoo artist</field>
+    </record>
+
+    <record id="speciality_data_master_of_shugaring" model="beauty.in.beauty.specialty" forcecreate="True">
+        <field name="name">Master of shugaring</field>
+    </record>
+
+    <record id="speciality_data_massage_therapist" model="beauty.in.beauty.specialty" forcecreate="True">
+        <field name="name">Massage therapist</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,85 @@
+<?xm1 version="1.0" encoding "utf-8"?>
+<odoo>
+
+    <!--Masters-->
+    <record id="master_demo_shredder" model="hr.employee">
+        <field name="name">Shredder</field>
+        <field name="work_phone">12345678912</field>
+        <field name="gender">male</field>
+        <field name="employee_type">master</field>
+        <field name="image_1920" type="base64" file="beauty_in/static/img/Shredder.png"/>
+    </record>
+
+    <record id="master_demo_krang" model="hr.employee">
+        <field name="name">Krang</field>
+        <field name="work_phone">12345678912</field>
+        <field name="gender">male</field>
+        <field name="employee_type">master</field>
+        <field name="image_1920" type="base64" file="beauty_in/static/img/Krang.png"/>
+    </record>
+
+    <record id="master_demo_bebop_and_rocksteady" model="hr.employee">
+        <field name="name">Bebop_and_Rocksteady</field>
+        <field name="work_phone">12341278912</field>
+        <field name="gender">male</field>
+        <field name="employee_type">master</field>
+        <field name="image_1920" type="base64" file="beauty_in/static/img/Bebop_and_Rocksteady.png"/>
+    </record>
+
+    <!-- Services -->
+    <record id="services_demo_tatoo" model="beauty.in.service">
+        <field name="name">Tatoo</field>
+        <field name="price">500</field>
+    </record>
+
+    <record id="services_demo_haircut" model="beauty.in.service">
+        <field name="name">Haircut</field>
+        <field name="price">50</field>
+    </record>
+
+    <record id="services_demo_manicure" model="beauty.in.service">
+        <field name="name">Manicure</field>
+        <field name="price">80</field>
+    </record>
+
+    <!--  Locations  -->
+    <record id="services_demo_main_office" model="beauty.in.location">
+        <field name="name">Main office</field>
+    </record>
+
+    <record id="services_demo_location_1" model="beauty.in.location">
+        <field name="name">Location 1</field>
+        <field name="parent_id" ref="beauty_in.services_demo_main_office"/>
+    </record>
+
+    <record id="services_demo_location_2" model="beauty.in.location">
+        <field name="name">Location 2</field>
+        <field name="parent_id" ref="beauty_in.services_demo_main_office"/>
+    </record>
+
+    <!--  Shedule  -->
+    <record id="schedule_demo_bebop_and_rocksteady" model="beauty.in.master.schedule">
+        <field name="shift_date" eval="(DateTime.today().date() + relativedelta(days=7)).strftime('%Y-%m-%d')"/>
+        <field name="shift_start_time" eval="(DateTime.today() + relativedelta(days=7)).strftime('%Y-%m-%d %H:%M')"/>
+        <field name="master_id" ref="beauty_in.master_demo_bebop_and_rocksteady"/>
+        <field name="location_id" ref="beauty_in.services_demo_location_1"/>
+        <field name="shift_duration">8</field>
+    </record>
+
+    <record id="schedule_demo_krang" model="beauty.in.master.schedule">
+        <field name="shift_date" eval="(DateTime.today().date() + relativedelta(days=5)).strftime('%Y-%m-%d')"/>
+        <field name="shift_start_time" eval="(DateTime.today() + relativedelta(days=5)).strftime('%Y-%m-%d %H:%M')"/>
+        <field name="master_id" ref="beauty_in.master_demo_krang"/>
+        <field name="location_id" ref="beauty_in.services_demo_location_1"/>
+        <field name="shift_duration">8</field>
+    </record>
+
+    <record id="schedule_demo_shredder" model="beauty.in.master.schedule">
+        <field name="shift_date" eval="(DateTime.today().date() + relativedelta(days=4)).strftime('%Y-%m-%d')"/>
+        <field name="shift_start_time" eval="(DateTime.today() + relativedelta(days=4)).strftime('%Y-%m-%d %H:%M')"/>
+        <field name="master_id" ref="beauty_in.master_demo_shredder"/>
+        <field name="location_id" ref="beauty_in.services_demo_location_2"/>
+        <field name="shift_duration">8</field>
+    </record>
+
+</odoo>
