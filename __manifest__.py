@@ -5,7 +5,7 @@
     'category': 'Customization',
     'summary': 'Maintaining records of masters and customers',
 
-    'author': 'Ostapets Sergii',
+    'author': 'Ostapets Sergii, Odoo Community Association (OCA)',
     'website': 'https://t.me/ostapec_serg',
 
     'depends': [
@@ -16,12 +16,12 @@
         'security/beauty_groups.xml',
         'security/ir.model.access.csv',
         'data/beauty_in_specialty_data.xml',
-        'data/beauty_in_demo.xml',
         'views/beauty_in_menus.xml',
         'wizard/create_appointment.xml',
         'wizard/week_schedule.xml',
         'views/specialty_views.xml',
         'views/master_views.xml',
+        'views/res_partner.xml',
         'views/location_views.xml',
         'views/service_views.xml',
         'views/appointment_views.xml',
@@ -30,9 +30,9 @@
         'reports/report.xml',
     ],
 
-    #   'demo': [
-    #      'data/beauty_in_demo.xml',
-    #   ],
+    'demo': [
+        'data/beauty_in_demo.xml',
+    ],
 
     'images': [
         'static/description/icon.png',

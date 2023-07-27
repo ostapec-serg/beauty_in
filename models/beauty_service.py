@@ -10,6 +10,7 @@ class BeautyService(models.Model):
     average_service_time = fields.Integer()
     desc = fields.Text(string="Description")
     active = fields.Boolean(
-        'Active', default=True,
-        help="By unchecking the active field, you may hide a location without deleting it."
+        default=True,
+        help="By unchecking the active field, "
+             "you may hide a location without deleting it."
     )

@@ -1,6 +1,6 @@
 from dateutil.relativedelta import relativedelta
 
-from odoo import fields, models, _
+from odoo import fields, models
 from odoo.addons.beauty_in import constants as const
 
 

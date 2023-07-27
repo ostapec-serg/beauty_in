@@ -1,4 +1,4 @@
-from odoo import api, fields, models, _
+from odoo import api, fields, models
 from odoo.addons.beauty_in import constants as const
 
 
@@ -31,9 +31,10 @@ class BeautyLocation(models.Model):
         comodel_name='beauty.in.location', inverse_name='parent_id',
         string='Contains'
     )
-    available_service_ids = fields.One2many(
-        comodel_name="beauty.in.service",
-        inverse_name="name"
+    available_service_ids = fields.Many2many(
+        comodel_name="beauty.in.beauty.specialty",
+        column1="location_id", column2="specialty_id",
+
     )
     comment = fields.Html('Additional Information')
     parent_path = fields.Char(index=True, unaccent=False)
@@ -43,15 +44,20 @@ class BeautyLocation(models.Model):
         help='Let this field empty if '
              'this location is shared between companies'
     )
-    barcode = fields.Char('Barcode', copy=False)
+    barcode = fields.Char(copy=False)
     active = fields.Boolean(
-        'Active', default=True,
+        default=True,
         help="By unchecking the active field, "
              "you may hide a location without deleting it."
     )
     appointment_ids = fields.One2many(
         comodel_name="beauty.in.appointment",
         inverse_name="location_id"
+    )
+    today_appointment_ids = fields.One2many(
+        comodel_name="beauty.in.appointment",
+        inverse_name="location_id",
+        domain=[("appointment_date", '=', fields.Date.today())]
     )
 
     @api.model

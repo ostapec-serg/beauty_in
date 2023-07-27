@@ -9,7 +9,7 @@
                 <sheet>
                     <group>
                         <group>
-                            <field name="shift_date"/>
+                            <field name="shift_date" invisible="1"/>
                             <field name="shift_start_time"/>
                             <field name="shift_end_time" readonly="1"/>
                             <field name="shift_duration"/>
@@ -48,7 +48,8 @@
                 <field name="master_id" avatar_field="image_128"/>
                 <field name="shift_start_time"/>
                 <field name="shift_end_time"/>
-                <!--                    <field name="visit_ids" avatar_field="img"/>-->
+                <field name="location_id"/>
+                <!--                    <field name="appointment_ids" avatar_field="img"/>-->
             </calendar>
         </field>
     </record>

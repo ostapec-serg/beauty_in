@@ -17,7 +17,7 @@
                         <field name="master_id"/>
                         <field name="service"/>
                         <field name="appointment_duration"/>
-                        <field name="location_id" required="1" readonly="1"/>
+                        <field name="location_id" readonly="1" attrs="{'invisible': [('location_id', '=', False)]}"/>
                         <field name="appointment_end_dtime" required="1" readonly="1"/>
                         <field name="day_name" readonly="1"/>
                         <field name="is_done" attrs="{'readonly': [('state', '=', 'draft')], 'invisible': [('state', '=', 'draft')]}"/>
@@ -41,6 +41,7 @@
                 <field name="partner_id"/>
                 <field name="master_id"/>
                 <field name="appointment_start_dtime"/>
+                <field name="location_id"/>
                 <field name="is_done"/>
             </tree>
         </field>

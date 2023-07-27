@@ -32,8 +32,7 @@ class BeautyInAppointment(models.Model):
         store=True, required=True
     )
     location_id = fields.Many2one(
-        comodel_name="beauty.in.location",
-        required=True
+        related='schedule_id.location_id'
     )
     # For easier searching
     appointment_date = fields.Date(
@@ -64,7 +63,7 @@ class BeautyInAppointment(models.Model):
     note = fields.Text()
     is_done = fields.Boolean()
     active = fields.Boolean(
-        'Active', default=True,
+        default=True,
         help="By unchecking the active field, "
              "you may hide a location without deleting it."
     )
@@ -157,10 +156,9 @@ class BeautyInAppointment(models.Model):
         """
         Checking available appointment time
         """
-        schedule = self._check_schedule_time(vals_list)
-        appointment = self._check_appointment_time(vals_list)
-        if schedule and appointment:
-            return True
+        self._check_schedule_time(vals_list)
+        self._check_appointment_time(vals_list)
+        return True
 
     def _check_schedule_time(self, vals_list: tp.Dict) -> tp.Any:
         """
@@ -258,5 +256,6 @@ class BeautyInAppointment(models.Model):
         """
         Convert duration `str` to datetime delta duration
         """
-        duration = timedelta(minutes=int(duration))
+        if duration:
+            duration = timedelta(minutes=int(duration))
         return duration
