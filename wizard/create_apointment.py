@@ -1,4 +1,4 @@
-from odoo import fields, models, api
+from odoo import fields, models, api, _
 from odoo.exceptions import UserError
 from odoo.addons.beauty_in import constants as const
 
@@ -20,10 +20,6 @@ class BeautyInAddAppointmentWizard(models.TransientModel):
         comodel_name="beauty.in.service",
         store=True, required=True
     )
-    location_id = fields.Many2one(
-        comodel_name="beauty.in.location",
-        required=True
-    )
     appointment_start_dtime = fields.Datetime(
         required=True,
         string="Appointment start date and time"
@@ -32,7 +28,7 @@ class BeautyInAddAppointmentWizard(models.TransientModel):
         selection=const.APPOINTMENT_DURATION,
         default="30",
     )
-    is_visible = fields.Boolean()
+    is_visible = fields.Boolean(default=True)
 
     def add_appointment(self):
         """
@@ -40,13 +36,14 @@ class BeautyInAddAppointmentWizard(models.TransientModel):
         :raise UserError: If appointment created in the past
         """
         self.ensure_one()
-        if self.appointment_start_dtime.date() >= fields.Datetime.now().date():
+        now = fields.Datetime.now().date()
+        if self.appointment_start_dtime.date() >= now:
             self.env["beauty.in.appointment"].create({
                 'partner_id': self.partner_id.id,
                 'master_id': self.master_id.id,
                 'appointment_start_dtime': self.appointment_start_dtime,
-                'service': self.service,
-                'location_id': self.location_id
+                'service': self.service.id,
+                'appointment_duration': self.appointment_duration,
             })
         else:
             raise UserError(
@@ -54,11 +51,29 @@ class BeautyInAddAppointmentWizard(models.TransientModel):
                 f"You choose - {self.appointment_start_dtime.date()}"
                 f"Choose another date!!!"
             )
+        message = _("Appointment added!\nAppointment date - ")
+        notification = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': _("Create an Appointment"),
+                'type': 'success',
+                'message': f"{message}{self.appointment_start_dtime}",
+                'fadeout': 'slow',
+                'fadein': 'slow',
+                'sticky': False,
+                'next': {
+                    'type': 'ir.actions.act_window_close'
+                }
+            }
+        }
+        return notification
 
     @api.onchange('appointment_start_dtime')
     def _check_date(self):
+        now = fields.Datetime.now().date()
         if self.appointment_start_dtime:
-            if self.appointment_start_dtime.date() >= fields.Datetime.now().date():
+            if self.appointment_start_dtime.date() >= now:
                 self.is_visible = True
             else:
                 self.is_visible = False

@@ -19,8 +19,7 @@
                     </group>
                     <notebook colspan="2" attrs="{'invisible': [('state', '=', 'draft')]}">
                         <page string="Today appointments" name="today_appointments" autofocus="autofocus">
-                        </page>
-                        <page string="Appointments history" name="appointments_history">
+                            <field name="today_appointment_ids"/>
                         </page>
                     </notebook>
                 </sheet>
@@ -47,9 +46,6 @@
         <field name="arch" type="xml">
             <search>
                 <searchpanel>
-<!--                    <field name="parent_id" hierarchize="1" enable_counters="1"/>-->
-<!--                    <field name="child_ids" icon="fa-users" select="multi"/>-->
-<!--                    <field name="state" expand="1" select="multi" icon="fa-users" enable_counters="1"/>-->
                     <field name="parent_id" limit="20" hierarchize="1" icon="fa-users" enable_counters="1"/>
                 </searchpanel>
             </search>

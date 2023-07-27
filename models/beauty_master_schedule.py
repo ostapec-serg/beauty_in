@@ -1,4 +1,4 @@
-from datetime import datetime, time, timedelta
+from datetime import timedelta
 
 from odoo import fields, models, api, _
 from odoo.addons.beauty_in import constants as const
@@ -48,18 +48,17 @@ class BeautyInMasterSchedule(models.Model):
     @api.model
     def create(self, vals_list):
         self._is_available_schedule_time(vals_list)
-        self._check_location_time(vals_list)
         return super().create(vals_list)
 
-    def write(self, vals):
-        """
-        Updates all records in ``self`` with the provided values.
-        """
-        #  TODO add checking func
-        # for rec in self:
-        #     if vals.get('shift_start_time', ""):
-        #         rec._is_available_schedule_time(vals)
-        return super().write(vals)
+    # def write(self, vals):
+    #     """
+    #     Updates all records in ``self`` with the provided values.
+    #     """
+    #  TODO add checking func for location
+    # for rec in self:
+    #     if vals.get('shift_start_time', ""):
+    #         rec._is_available_schedule_time(vals)
+    # return super().write(vals)
 
     @api.onchange('shift_date')
     @api.depends('shift_date')
@@ -76,7 +75,9 @@ class BeautyInMasterSchedule(models.Model):
     # @api.depends('tz')
     # def _compute_tz_offset(self):
     #     for user in self:
-    #         user.tz_offset = datetime.datetime.now(pytz.timezone(user.tz or 'GMT')).strftime('%z')
+    #         user.tz_offset = datetime.datetime.now(
+    #         pytz.timezone(user.tz or 'GMT')
+    #         ).strftime('%z')
 
     def name_get(self) -> list:
         """ Build display name """
@@ -102,22 +103,15 @@ class BeautyInMasterSchedule(models.Model):
 
     # TODO Add doctor new schedule checking method.
 
-    @api.onchange('shift_date', 'shift_start_time')
-    @api.depends('shift_date', 'shift_start_time')
+    @api.onchange('shift_start_time')
+    @api.depends('shift_start_time')
     def _get_shift_start_date(self):
         """
         Compute shift_start_time date based on shift_date field
         """
         for rec in self:
-            if rec.shift_date:
-                if not rec.shift_start_time:
-                    rec.shift_start_time = datetime.combine(
-                        rec.shift_date, time(0, 0, 0)
-                    )
-                elif rec.shift_start_time:
-                    rec.shift_start_time = datetime.combine(
-                        rec.shift_date, rec.shift_start_time.time()
-                    )
+            if rec.shift_start_time:
+                rec.shift_date = rec.shift_start_time.date()
 
     def _is_available_schedule_time(self, vals_list):
         dlt = const.delta
@@ -160,27 +154,20 @@ class BeautyInMasterSchedule(models.Model):
         new_shift_start = params['new_shift_start']
         new_shift_end = params['new_shift_end']
         location_id = params['location_id']
-
         for schedule in schedules:
             # Checkin whether the specified location does not
             # overlap with existing schedules in this location
             shift_start = schedule.shift_start_time
             shift_end = schedule.shift_end_time
-            if shift_start < (new_shift_start or new_shift_end) < shift_end:
-                if schedule.location_id.id == location_id:
+            if new_shift_start < (shift_start or shift_end) < new_shift_end:
+                loc_id = schedule.location_id.id
+                if loc_id == location_id:
                     raise ValidationError(
-                        _("Specified Location is busy!"
-                          " Choose another time!"
+                        _("Specified location is busy!"
+                          " Choose another time or another location!"
                           )
                     )
         return True
-
-    # def _can_be_used(self):
-    #     """Check if product/package can be stored in the location. Quantity
-    #     should in the default uom of product, it's only used when no package is
-    #     specified."""
-    #     self.ensure_one()
-    #     return True
 
     def get_filtered_schedules(self, shift_date, master_id):
         schedules = self.search([

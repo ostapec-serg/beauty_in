@@ -1,6 +1,6 @@
 from datetime import timedelta, datetime, time
 
-from odoo import fields, models, api, _ as t
+from odoo import fields, models, api, _ as _t
 from odoo.addons.beauty_in import constants as const
 from odoo.exceptions import ValidationError
 
@@ -62,14 +62,20 @@ class BeautyInWeekScheduleWizard(models.TransientModel):
                 schedule_count += 1
             except ValidationError:
                 pass
+        message = _t("Added schedules for days out of 7 - ")
         notification = {
             'type': 'ir.actions.client',
             'tag': 'display_notification',
             'params': {
-                'title': t("Week schedule"),
+                'title': _t("Week schedule"),
                 'type': 'success',
-                'message': t(f"Added schedules for {schedule_count} days out of 7"),
+                'message': f"{message}{schedule_count}",
+                'fadeout': 'slow',
+                'fadein': 'slow',
                 'sticky': False,
+                'next': {
+                    'type': 'ir.actions.act_window_close'
+                }
             }
         }
         return notification

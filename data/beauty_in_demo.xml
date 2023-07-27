@@ -1,5 +1,5 @@
 <?xm1 version="1.0" encoding "utf-8"?>
-<odoo>
+<odoo noupdate="1">
 
     <!--Masters-->
     <record id="master_demo_shredder" model="hr.employee">
@@ -62,7 +62,7 @@
         <field name="shift_date" eval="(DateTime.today().date() + relativedelta(days=7)).strftime('%Y-%m-%d')"/>
         <field name="shift_start_time" eval="(DateTime.today() + relativedelta(days=7)).strftime('%Y-%m-%d %H:%M')"/>
         <field name="master_id" ref="beauty_in.master_demo_bebop_and_rocksteady"/>
-        <field name="location_id" ref="beauty_in.services_demo_location_1"/>
+        <field name="location_id" ref="beauty_in.services_demo_main_office"/>
         <field name="shift_duration">8</field>
     </record>
 

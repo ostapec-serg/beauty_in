@@ -30,10 +30,22 @@
         </field>
     </record>
 
+    <record id="service_card_view_search" model="ir.ui.view">
+        <field name="name">service_card_view_search</field>
+        <field name="model">beauty.in.service</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Name" filter_domain="[('name', 'ilike', self)]"/>
+                <field name="price" string="Price" filter_domain="[('price', 'ilike', self)]"/>
+            </search>
+        </field>
+    </record>
+
     <record id="beauty_in_action_view_service" model="ir.actions.act_window">
         <field name="name">Service</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">beauty.in.service</field>
+        <field name="search_view_id" ref="beauty_in.service_card_view_search"/>
         <field name="view_mode">tree,form</field>
     </record>
 
